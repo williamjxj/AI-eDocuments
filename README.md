@@ -1,12 +1,12 @@
-# AI E-Documents POC: ETL Multi-Media to RAG Engine
+# AI E-Documents: ETL Multi-Media to RAG Engine
 
-This repository hosts the **Proof of Concept (POC)** for an AI-powered document intelligence platform, designed as a minimal business version to streamline the processing of diverse, multi-modal documents using a dedicated ETL-to-RAG pipeline. This project uses advanced OCR, RAG, and Agentic AI for broader business and multimedia use cases.
+This repository hosts an AI-powered document intelligence platform, designed as a minimal business version to streamline the processing of diverse, multi-modal documents using a dedicated ETL-to-RAG pipeline. This project uses advanced OCR, RAG, and Agentic AI for broader business and multimedia use cases.
 
-## 🎯 Project Goal and Scope (POC/MVP)
+## 🎯 Project Goal and Scope 
 
 The primary objective is to execute a robust pipeline that converts complex **multi-media resources** via **ETL (Extract, Transform, Load)** methods into a structured knowledge base powered by **Retrieval-Augmented Generation (RAG)**.
 
-**Note:** This is the first stage, intended for **POC/MVP purpose**, and avoids immediate implementation of large-scale, high-cost services like Snowflake, preferring cost-effective alternatives.
+**Note:** This is the minimum bootstrap implementation, and avoids immediate implementation of large-scale, high-cost services like Snowflake, preferring cost-effective alternatives.
 
 ---
 
@@ -32,11 +32,11 @@ The platform provides high-value user features built upon the integrated data:
 
 ---
 
-## 🛠️ Technology Stack (POC Focus)
+## 🛠️ Technology Stack
 
-The POC prioritizes open-source and cost-effective solutions:
+The POC/MVP prioritizes open-source and cost-effective solutions:
 
-| Component | Function | Sample Technologies Investigated for POC | Source |
+| Component | Function | Sample Technologies Investigated | Source |
 | :--- | :--- | :--- | :--- |
 | **Document Ingestion (OCR/Parsing)** | Multi-format content extraction and transcription | Tesseract, PaddleOCR, Unstructured, LangChain loaders | |
 | **Multimedia Processing** | Audio and video transcription | Whisper, ffmpeg | |
