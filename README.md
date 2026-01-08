@@ -2,6 +2,10 @@
 
 This repository hosts an AI-powered document intelligence platform, designed as a minimal business version to streamline the processing of diverse, multi-modal documents using a dedicated ETL-to-RAG pipeline. This project uses advanced OCR, RAG, and Agentic AI for broader business and multimedia use cases.
 
+## 📄 Documentation
+
+- [Project Gemini Technical Blueprint (PDF)](Project_Gemini_Technical_Blueprint.pdf)
+
 ## 🎯 Project Goal and Scope 
 
 The primary objective is to execute a robust pipeline that converts complex **multi-media resources** via **ETL (Extract, Transform, Load)** methods into a structured knowledge base powered by **Retrieval-Augmented Generation (RAG)**.
