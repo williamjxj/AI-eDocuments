@@ -1,0 +1,225 @@
+# AgenticOmni .gitignore
+# Generated for Python + Node.js + Docker project
+
+# ============================================================================
+# Python
+# ============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+.env/
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# ============================================================================
+# Node.js / JavaScript / TypeScript
+# ============================================================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.nuxt/
+.cache/
+.parcel-cache/
+
+# Testing
+coverage/
+.nyc_output/
+
+# Misc
+.DS_Store
+*.pem
+*.log
+
+# Next.js
+.next/
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# ============================================================================
+# Environment Variables & Secrets
+# ============================================================================
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+!.env.example
+
+# ============================================================================
+# IDEs and Editors
+# ============================================================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.history/
+
+# JetBrains IDEs
+.idea/
+*.iml
+*.iws
+
+# Visual Studio Code
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json.example
+
+# ============================================================================
+# Operating System
+# ============================================================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# ============================================================================
+# Database
+# ============================================================================
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+
+# PostgreSQL
+*.pgdata
+
+# ============================================================================
+# Docker
+# ============================================================================
+docker-compose.override.yml
+.dockerignore
+
+# ============================================================================
+# Logs
+# ============================================================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+pnpm-debug.log*
+
+# ============================================================================
+# Temporary Files
+# ============================================================================
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+
+# ============================================================================
+# Project-Specific
+# ============================================================================
+# Alembic migration scripts (keep versions/, ignore local test migrations)
+# Uncomment if you want to ignore specific migration versions:
+# src/storage_indexing/migrations/versions/*_local_test.py
+
+# Upload directories (if storing files locally during development)
+uploads/
+temp_uploads/
+
+# Generated documentation
+docs/_build/
+site/
+
+# ML models and large files (use git-lfs if needed)
+*.h5
+*.pkl
+*.pth
+*.onnx
+*.safetensors
+
+# ============================================================================
+# Security
+# ============================================================================
+*.key
+*.pem
+*.crt
+*.p12
+*.pfx
+secrets/
+.secrets/

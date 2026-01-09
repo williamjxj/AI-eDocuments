@@ -1,0 +1,54 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: ankane/pgvector:v0.5.1
+    container_name: agenticomni-postgres
+    environment:
+      POSTGRES_DB: agenticomni
+      POSTGRES_USER: agenti_user
+      POSTGRES_PASSWORD: dev_password_change_in_prod
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init_db.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U agenti_user -d agenticomni"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - agenticomni-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: agenticomni-redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - agenticomni-network
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+
+volumes:
+  postgres_data:
+    driver: local
+    name: agenticomni_postgres_data
+  redis_data:
+    driver: local
+    name: agenticomni_redis_data
+
+networks:
+  agenticomni-network:
+    driver: bridge
+    name: agenticomni-network

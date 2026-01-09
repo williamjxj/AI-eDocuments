@@ -1,90 +1,367 @@
-# AI E-Documents: ETL Multi-Media to RAG Engine
+# AgenticOmni: AI-Powered Document Intelligence Platform
 
-This repository hosts an AI-powered document intelligence platform, designed as a minimal business version to streamline the processing of diverse, multi-modal documents using a dedicated ETL-to-RAG pipeline. This project uses advanced OCR, RAG, and Agentic AI for broader business and multimedia use cases.
+**Status**: 🚧 Application Skeleton - Foundation Phase  
+**Version**: 0.1.0  
+**License**: Proprietary
 
-## 📄 Documentation
+## 📄 Overview
 
-- [Project Gemini Technical Blueprint (PDF)](Project_Gemini_Technical_Blueprint.pdf)
+AgenticOmni is an enterprise-grade AI document intelligence platform built on an ETL-to-RAG pipeline architecture. The system transforms complex multi-format documents (PDFs, DOCX, PPTX, images, audio, video) into searchable, intelligent knowledge bases powered by retrieval-augmented generation.
 
-## 🎯 Project Goal and Scope 
+### Key Capabilities
 
-The primary objective is to execute a robust pipeline that converts complex **multi-media resources** via **ETL (Extract, Transform, Load)** methods into a structured knowledge base powered by **Retrieval-Augmented Generation (RAG)**.
+- **Multi-Format Ingestion**: Process diverse document types with OCR, NLP, and multimedia extraction
+- **Hybrid Retrieval**: Combine vector search (pgvector) with keyword search for optimal accuracy
+- **Enterprise Security**: Row-level multi-tenancy with RBAC and document-level permissions
+- **Production-Ready**: Async FastAPI backend, PostgreSQL + pgvector, Docker development environment
+- **Modern Frontend**: Next.js 14 with TypeScript, Tailwind CSS, and shadcn/ui components
 
-**Note:** This is the minimum bootstrap implementation, and avoids immediate implementation of large-scale, high-cost services like Snowflake, preferring cost-effective alternatives.
+## 🏗️ Architecture
 
----
+### Backend Modules
 
-## 🏗️ Core Processing Pipeline (ETL Workflow)
-
-The system is engineered to handle multiple input formats and accurately parse content through a rigorous three-step process:
-
-1.  **Extraction (E) & Loading:** The platform accepts diverse input formats, including **PDFs, DOCX, PPTX, slides, XML, JSON, images, audio, video, and other multimedia**. Content parsing is achieved using **robust OCR, NLP, and multimedia extraction technologies**.
-2.  **Transformation (T):** Extracted data is automatically **categorized, tagged, and indexed** by type, topic, author, or custom metadata. This stage is enhanced with **Agentic AI** to automate complex workflows like content tagging and version control.
-3.  **Intelligence Layer (RAG/LLM):** **Retrieval-Augmented Generation (RAG)** is implemented on the processed, indexed documents. This enables precise extraction, validation, **semantic search, summarization**, and intelligent assistance across all content types, eliminating the need for model retraining.
-
----
-
-## ✨ Key Features
-
-The platform provides high-value user features built upon the integrated data:
-
-*   **Natural Querying:** Enable users to **query documents naturally** (e.g., "find contracts with clause X").
-*   **Reporting and Summarization:** Users can generate **customizable reports/summaries** and export data in preferred formats.
-*   **Visualization:** Visualize insights through **dynamic charts, timelines, or network graphs** for analyzing trends, usage patterns, and key metrics.
-*   **Security:** Enforce robust **authentication, encryption, role-based access controls (RBAC), and compliance features** (e.g., GDPR, audit logs) to protect sensitive documents.
-*   **API Integration:** The indexed data supports **seamless API integrations** for internal applications such as CRM, collaboration tools, or knowledge bases.
-
----
-
-## 🛠️ Technology Stack
-
-The POC/MVP prioritizes open-source and cost-effective solutions:
-
-| Component | Function | Sample Technologies Investigated | Source |
-| :--- | :--- | :--- | :--- |
-| **Document Ingestion (OCR/Parsing)** | Multi-format content extraction and transcription | Tesseract, PaddleOCR, Unstructured, LangChain loaders | |
-| **Multimedia Processing** | Audio and video transcription | Whisper, ffmpeg | |
-| **RAG & Agent Frameworks** | Implementing core AI intelligence and automation | LangChain, LlamaIndex, LangGraph | |
-| **Vector Databases (MVP)** | Storing and searching vectorized document chunks | Chroma, pgvector, Weaviate | |
-| **Data Analysis** | Lightweight analysis of structured data | DuckDB, PostgreSQL (as an alternative to enterprise DW) | |
-| **Security/Auth** | Providing RBAC and compliance features out-of-the-box | Supabase Auth, Keycloak, Auth0 | |
-| **Frontend** | Rendering data visualizations and user interface | Frontend libraries for data visualization (Dynamic Charts, Network Graphs) |, |
-
----
-
-## Workflow Diagram
-
-```mermaid
-graph TD
-    %% Stage 1: Input Ingestion and Core Parsing
-    A[Multi-Format Ingestion<br/>PDFs, DOCX, PPTX, XML, JSON<br/>Images, Audio, Video] --> B[Core Content Extraction<br/>OCR, NLP, Multimedia<br/>Extraction Technologies]
-    
-    %% Stage 2: Data Management and AI Intelligence
-    B --> C[Indexing and Tagging<br/>Categorization by Type,<br/>Topic, Author, Metadata]
-    C --> D[RAG Implementation<br/>Semantic Search,<br/>Summarization,<br/>Intelligent Assistance]
-    C --> E[Agentic Automation<br/>Content Tagging,<br/>Version Control,<br/>Legacy System Integration]
-    
-    %% Stage 3: Security and Integration
-    D --> F[Security & Access Control<br/>Authentication, Encryption,<br/>RBAC, Compliance GDPR,<br/>Audit Logs]
-    E --> F
-    F --> G[API Integration<br/>CRM Systems,<br/>Collaboration Tools,<br/>Knowledge Bases]
-    
-    %% Stage 4: User Features and Output
-    G --> H[Natural Querying<br/>Ask Questions Naturally<br/>Find Specific Content]
-    G --> I[Reporting & Visualization<br/>Customizable Reports,<br/>Export Data,<br/>Charts & Timelines]
-    
-    %% Styling
-    classDef stage1 fill:#e1f5ff,stroke:#01579b,stroke-width:2px
-    classDef stage2 fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
-    classDef stage3 fill:#fff3e0,stroke:#e65100,stroke-width:2px
-    classDef stage4 fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px
-    
-    class A,B stage1
-    class C,D,E stage2
-    class F,G stage3
-    class H,I stage4
+```
+src/
+├── ingestion_parsing/      # Document upload, OCR, multimedia processing
+├── storage_indexing/        # Database models, Alembic migrations, pgvector
+├── rag_orchestration/       # LangChain/LlamaIndex RAG workflows
+├── eval_harness/            # Metrics, accuracy tracking, regression tests
+├── security_auth/           # Multi-tenant RBAC, permissions, audit logs
+├── api/                     # FastAPI server, routes, middleware
+└── shared/                  # Config, logging, common utilities
 ```
 
-## Codes
+### Frontend
 
-Coming soon.
+```
+frontend/
+├── app/                     # Next.js 14 App Router pages
+├── components/              # React components + shadcn/ui
+└── lib/                     # API client, utilities
+```
+
+### Technology Stack
+
+| Component | Technology | Purpose |
+|-----------|-----------|---------|
+| **Backend Framework** | FastAPI + async/await | High-performance async API server |
+| **Database** | PostgreSQL 14+ | ACID-compliant relational database |
+| **Vector Store** | pgvector (1536d) | Semantic search with embeddings |
+| **Caching** | Redis 7 | Session storage and query caching |
+| **Migrations** | Alembic | Database schema version control |
+| **ORM** | SQLAlchemy (async) | Type-safe database access |
+| **RAG Framework** | LangChain, LlamaIndex | Flexible retrieval orchestration |
+| **Logging** | structlog (JSON) | Structured, cloud-native logging |
+| **Testing** | pytest + pytest-asyncio | Comprehensive test coverage |
+| **Code Quality** | Ruff, mypy | Fast linting and type checking |
+| **Frontend** | Next.js 14, TypeScript | Modern React with SSR/SSG |
+| **Styling** | Tailwind CSS, shadcn/ui | Utility-first CSS + accessible components |
+| **Containerization** | Docker Compose | Consistent development environment |
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- **Python**: 3.12+
+- **Node.js**: 18+
+- **Docker**: 20+ with Docker Compose
+- **Git**: 2.30+
+
+### Installation
+
+```bash
+# 1. Clone the repository
+git clone <repository-url> agenticomni
+cd agenticomni
+
+# 2. Set up environment variables
+cp .env.example .env
+# Edit .env with your configuration (see Configuration section below)
+
+# 3. Start services (PostgreSQL + Redis)
+docker-compose up -d
+
+# 4. Set up Python environment
+python3.12 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -e .
+
+# 5. Run database migrations
+alembic upgrade head
+
+# 6. Start backend API server
+uvicorn src.api.main:app --reload --host 0.0.0.0 --port 8000
+
+# 7. In a new terminal, start frontend (optional)
+cd frontend
+npm install
+npm run dev
+```
+
+### Verify Installation
+
+```bash
+# Test health endpoint
+curl http://localhost:8000/api/v1/health
+
+# Expected response:
+# {
+#   "status": "healthy",
+#   "timestamp": "2026-01-09T...",
+#   "version": "0.1.0",
+#   "checks": {
+#     "database": {"status": "healthy", "response_time_ms": 5},
+#     "redis": {"status": "healthy", "response_time_ms": 2}
+#   }
+# }
+
+# View API documentation
+# Open http://localhost:8000/api/v1/docs in your browser
+
+# View frontend (if started)
+# Open http://localhost:3000 in your browser
+```
+
+## ⚙️ Configuration
+
+### Required Environment Variables
+
+```bash
+# Database (PostgreSQL with pgvector)
+DATABASE_URL=postgresql+asyncpg://agenti_user:your_password@localhost:5432/agenticomni
+DATABASE_POOL_SIZE=5
+DATABASE_MAX_OVERFLOW=10
+
+# Vector Store
+VECTOR_DIMENSIONS=1536
+
+# API Server
+API_HOST=0.0.0.0
+API_PORT=8000
+CORS_ORIGINS=http://localhost:3000
+
+# Logging
+LOG_LEVEL=INFO
+
+# Security
+SECRET_KEY=your-secret-key-change-in-production
+ENFORCE_TENANT_ISOLATION=true
+```
+
+### Optional Environment Variables
+
+```bash
+# LLM API Keys (for future RAG features)
+OPENAI_API_KEY=sk-...
+ANTHROPIC_API_KEY=sk-ant-...
+```
+
+See `.env.example` for complete configuration options with documentation.
+
+## 📚 Documentation
+
+### 📖 Core Documentation (Version Controlled)
+
+All documentation follows [Semantic Versioning](https://semver.org/) with change tracking in [CHANGELOG.md](./docs/CHANGELOG.md).
+
+- **[Documentation Index](./docs/README.md)** - Complete documentation catalog with versioning standards
+- **[Implementation Summary](./docs/implementation-summary.md)** v1.0.0 - Complete implementation overview with diagrams
+- **[Versioning Guide](./docs/VERSIONING_GUIDE.md)** v1.0.0 - Quick reference for documentation versioning
+- **[CHANGELOG](./docs/CHANGELOG.md)** - Documentation change history
+
+### 🎯 Feature Specifications
+
+- **[Quickstart Guide](./specs/001-app-skeleton-init/quickstart.md)** - Detailed setup instructions
+- **[Implementation Plan](./specs/001-app-skeleton-init/plan.md)** - Technical architecture and decisions
+- **[Data Model](./specs/001-app-skeleton-init/data-model.md)** - Database schema and entities
+- **[API Contracts](./specs/001-app-skeleton-init/contracts/)** - OpenAPI specifications
+- **[Tasks](./specs/001-app-skeleton-init/tasks.md)** - Implementation task breakdown (121 tasks)
+
+### 🏛️ Architecture Documents
+
+- **[Technical Blueprint](./docs/Project_Gemini_Technical_Blueprint.pdf)** - Complete system design
+- **[NotebookLM Setup](./docs/1-notebooklm-setup.md)** - Architecture overview and module design
+- **[ChatGPT Setup](./docs/2-chatgpt-setup.md)** - ETL workflow diagrams
+- **[Requirements](./docs/requirements-1.md)** - Business and technical requirements
+
+### 📝 Document Validation
+
+```bash
+# Validate all documentation follows standards
+python scripts/validate_docs.py
+
+# Create new documentation from template
+cp docs/templates/DOCUMENT_TEMPLATE.md docs/my-new-doc.md
+```
+
+## 🧪 Testing
+
+```bash
+# Run all tests
+pytest
+
+# Run with coverage report
+pytest --cov=src --cov-report=html
+
+# Run specific test file
+pytest tests/unit/test_models.py
+
+# Run tests in watch mode (requires pytest-watch)
+ptw
+```
+
+### Test Organization
+
+```
+tests/
+├── unit/             # Unit tests (models, utilities, pure functions)
+├── integration/      # Integration tests (database, API, external services)
+└── fixtures/         # Test data factories and fixtures
+```
+
+## 🔧 Development
+
+### Code Quality
+
+```bash
+# Linting with Ruff
+ruff check src/ tests/
+
+# Auto-fix linting issues
+ruff check --fix src/ tests/
+
+# Format code
+ruff format src/ tests/
+
+# Type checking with mypy
+mypy src/
+```
+
+### Database Migrations
+
+```bash
+# Create new migration (auto-generated from model changes)
+alembic revision --autogenerate -m "Add new table"
+
+# Apply migrations
+alembic upgrade head
+
+# Rollback last migration
+alembic downgrade -1
+
+# View migration history
+alembic history
+```
+
+### Running Services
+
+```bash
+# Start all services (PostgreSQL, Redis)
+docker-compose up -d
+
+# Stop all services
+docker-compose down
+
+# View logs
+docker-compose logs -f
+
+# Restart specific service
+docker-compose restart postgres
+```
+
+## 📁 Project Structure
+
+```
+agenticomni/
+├── src/                      # Backend source code
+│   ├── api/                  # FastAPI application
+│   ├── storage_indexing/     # Database models and migrations
+│   ├── ingestion_parsing/    # Document processing (scaffolded)
+│   ├── rag_orchestration/    # RAG workflows (scaffolded)
+│   ├── eval_harness/         # Evaluation metrics (scaffolded)
+│   ├── security_auth/        # Security and auth (scaffolded)
+│   └── shared/               # Common utilities
+├── tests/                    # Test suite
+├── frontend/                 # Next.js frontend application
+├── config/                   # Configuration files
+├── scripts/                  # Automation scripts
+├── docs/                     # Architecture documentation
+├── specs/                    # Feature specifications and plans
+├── docker-compose.yml        # Docker services configuration
+├── pyproject.toml            # Python dependencies and tool config
+├── alembic.ini               # Alembic migration configuration
+└── README.md                 # This file
+```
+
+## 🛠️ Development Scripts
+
+```bash
+# Database setup
+./scripts/setup_db.sh         # Initialize database and run migrations
+
+# Development server
+./scripts/run_dev.sh           # Start backend with hot-reload
+
+# Environment validation
+./scripts/validate_env.sh      # Check all required env vars are set
+
+# Full setup (from scratch)
+./scripts/full_setup.sh        # Complete environment setup and validation
+```
+
+## 🚢 Deployment
+
+**Note**: Production deployment configuration is planned for future releases.
+
+## 🤝 Contributing
+
+This is a private project. For internal contributors:
+
+1. Follow the established code style (enforced by Ruff and mypy)
+2. Write tests for new features (minimum 80% coverage)
+3. Update documentation when adding new modules or changing APIs
+4. Use feature branches and pull requests for all changes
+5. Ensure all checks pass before requesting review
+
+## 📊 Project Status
+
+### Current Phase: Application Skeleton ✅
+
+- [x] Project structure and module organization
+- [x] Dependency management (pyproject.toml)
+- [x] Configuration management (Pydantic Settings)
+- [x] Database schema with 6 entities
+- [x] Alembic migrations setup
+- [x] FastAPI server with health check
+- [x] Docker development environment
+- [x] Testing framework (pytest)
+- [x] Frontend shell (Next.js)
+
+### Next Phase: Document Processing Pipeline
+
+- [ ] Docling integration for PDF/DOCX parsing
+- [ ] OCR engine integration (PaddleOCR or Tesseract)
+- [ ] Document upload and storage endpoints
+- [ ] Embedding generation pipeline
+- [ ] Vector similarity search implementation
+
+### Future Phases
+
+- [ ] RAG query endpoints with LangChain
+- [ ] LangGraph agentic workflows
+- [ ] Evaluation harness and metrics dashboard
+- [ ] Authentication and authorization (Auth0/Keycloak)
+- [ ] Admin dashboard UI
+- [ ] Multi-document relationship queries (GraphRAG)
+
+## 📝 License
+
+Proprietary - All Rights Reserved
+
+## 👥 Contact
+
+For questions or support, contact the development team.
+
+---
+
+**Built with** ❤️ **for enterprise document intelligence**

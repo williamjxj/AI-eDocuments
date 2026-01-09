@@ -1,0 +1,290 @@
+[project]
+name = "agenticomni"
+version = "0.1.0"
+description = "AgenticOmni - AI-powered document intelligence platform with ETL-to-RAG pipeline"
+authors = [
+    {name = "Best IT Consultants", email = "contact@agenticomni.example.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+license = {text = "Proprietary"}
+keywords = [
+    "document-ai",
+    "rag",
+    "llm",
+    "ocr",
+    "vector-search",
+    "langchain",
+    "fastapi",
+    "enterprise"
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+    # Core API Framework
+    "fastapi>=0.109.0",
+    "uvicorn[standard]>=0.27.0",
+    "python-multipart>=0.0.6",
+    "pydantic>=2.5.0",
+    "pydantic-settings>=2.1.0",
+    
+    # Database & ORM
+    "sqlalchemy[asyncio]>=2.0.25",
+    "alembic>=1.13.0",
+    "psycopg2-binary>=2.9.9",
+    "asyncpg>=0.29.0",
+    "pgvector>=0.2.4",
+    
+    # RAG & LLM Frameworks
+    "langchain>=0.1.0",
+    "langchain-community>=0.0.10",
+    "langchain-core>=0.1.0",
+    "llama-index>=0.9.0",
+    "openai>=1.10.0",
+    "anthropic>=0.8.0",
+    
+    # Document Processing
+    "pillow>=10.2.0",
+    "pytesseract>=0.3.10",
+    "opencv-python>=4.9.0",
+    "pypdf>=4.0.0",
+    
+    # Logging
+    "structlog>=24.1.0",
+    "python-json-logger>=2.0.7",
+    
+    # Utilities
+    "python-dotenv>=1.0.0",
+    "httpx>=0.26.0",
+    "redis>=5.0.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    # Testing
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+    "pytest-cov>=4.1.0",
+    "pytest-mock>=3.12.0",
+    "pytest-xdist>=3.5.0",
+    
+    # Code Quality
+    "ruff>=0.1.14",
+    "mypy>=1.8.0",
+    
+    # Type Stubs
+    "types-redis>=4.6.0",
+    "types-pillow>=10.2.0",
+]
+
+[project.urls]
+Homepage = "https://agenticomni.example.com"
+Documentation = "https://docs.agenticomni.example.com"
+Repository = "https://github.com/bestit/agenticomni"
+
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+# ============================================================================
+# Tool Configuration: Ruff (Linting & Formatting)
+# ============================================================================
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "tests"]
+exclude = [
+    ".git",
+    ".mypy_cache",
+    ".ruff_cache",
+    ".venv",
+    "venv",
+    "__pycache__",
+    "dist",
+    "build",
+    "*.egg-info",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",     # pycodestyle errors
+    "W",     # pycodestyle warnings
+    "F",     # pyflakes
+    "I",     # isort (import sorting)
+    "N",     # pep8-naming
+    "UP",    # pyupgrade
+    "ANN",   # flake8-annotations
+    "B",     # flake8-bugbear
+    "C4",    # flake8-comprehensions
+    "DTZ",   # flake8-datetimez
+    "T10",   # flake8-debugger
+    "EM",    # flake8-errmsg
+    "ISC",   # flake8-implicit-str-concat
+    "ICN",   # flake8-import-conventions
+    "G",     # flake8-logging-format
+    "PIE",   # flake8-pie
+    "T20",   # flake8-print
+    "PT",    # flake8-pytest-style
+    "Q",     # flake8-quotes
+    "RSE",   # flake8-raise
+    "RET",   # flake8-return
+    "SIM",   # flake8-simplify
+    "TID",   # flake8-tidy-imports
+    "TCH",   # flake8-type-checking
+    "ARG",   # flake8-unused-arguments
+    "PTH",   # flake8-use-pathlib
+    "PD",    # pandas-vet
+    "PGH",   # pygrep-hooks
+    "PL",    # pylint
+    "TRY",   # tryceratops
+    "FLY",   # flynt
+    "NPY",   # numpy-specific rules
+    "PERF",  # performance anti-patterns
+    "RUF",   # ruff-specific rules
+]
+
+ignore = [
+    "ANN101",  # Missing type annotation for self
+    "ANN102",  # Missing type annotation for cls
+    "ANN401",  # Dynamically typed expressions (Any) are disallowed
+    "PLR0913", # Too many arguments to function call
+    "PLR2004", # Magic value used in comparison
+    "TRY003",  # Avoid specifying long messages outside the exception class
+    "EM101",   # Exception must not use a string literal
+    "EM102",   # Exception must not use an f-string literal
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = [
+    "S101",    # Use of assert
+    "ANN",     # Type annotations not required in tests
+    "PLR2004", # Magic values are fine in tests
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["src"]
+section-order = [
+    "future",
+    "standard-library",
+    "third-party",
+    "first-party",
+    "local-folder",
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+
+# ============================================================================
+# Tool Configuration: mypy (Type Checking)
+# ============================================================================
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+disallow_untyped_defs = true
+disallow_any_unimported = false
+disallow_any_generics = true
+disallow_subclassing_any = true
+no_implicit_optional = true
+strict_optional = true
+strict_equality = true
+check_untyped_defs = true
+
+# Per-module options
+[[tool.mypy.overrides]]
+module = [
+    "langchain.*",
+    "llama_index.*",
+    "alembic.*",
+    "sqlalchemy.*",
+    "pgvector.*",
+    "pytesseract.*",
+    "cv2.*",
+]
+ignore_missing_imports = true
+
+# ============================================================================
+# Tool Configuration: pytest (Testing)
+# ============================================================================
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+    "--cov=src",
+    "--cov-report=term-missing",
+    "--cov-report=html",
+    "--cov-report=xml",
+    "--cov-branch",
+    "--cov-fail-under=80",
+    "-v",
+    "-ra",
+    "--tb=short",
+]
+markers = [
+    "unit: Unit tests (fast, isolated)",
+    "integration: Integration tests (require database, external services)",
+    "slow: Slow tests (> 1 second)",
+    "asyncio: Async tests requiring asyncio",
+]
+asyncio_mode = "auto"
+filterwarnings = [
+    "error",
+    "ignore::DeprecationWarning",
+    "ignore::PendingDeprecationWarning",
+]
+
+# ============================================================================
+# Tool Configuration: coverage.py
+# ============================================================================
+[tool.coverage.run]
+source = ["src"]
+omit = [
+    "tests/*",
+    "*/__init__.py",
+    "*/migrations/*",
+]
+branch = true
+
+[tool.coverage.report]
+precision = 2
+show_missing = true
+skip_covered = false
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if TYPE_CHECKING:",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "@abstractmethod",
+    "@abc.abstractmethod",
+]
+
+[tool.coverage.html]
+directory = "htmlcov"
+
+# ============================================================================
+# Tool Configuration: setuptools (Build)
+# ============================================================================
+[tool.setuptools]
+packages = ["src"]
+
+[tool.setuptools.package-data]
+"*" = ["py.typed"]

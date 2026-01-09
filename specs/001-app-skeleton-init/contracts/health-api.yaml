@@ -1,0 +1,195 @@
+openapi: 3.0.3
+info:
+  title: AgenticOmni Health Check API
+  description: |
+    Health check endpoint for the AgenticOmni document intelligence platform.
+    Provides system status, database connectivity, and basic service diagnostics.
+  version: 0.1.0
+  contact:
+    name: AgenticOmni Team
+    email: support@agenticomni.example.com
+
+servers:
+  - url: http://localhost:8000/api/v1
+    description: Local development server
+  - url: https://api.agenticomni.example.com/api/v1
+    description: Production server (future)
+
+tags:
+  - name: health
+    description: System health and status endpoints
+
+paths:
+  /health:
+    get:
+      summary: Health Check
+      description: |
+        Returns the current health status of the API server, including:
+        - API service status
+        - Database connectivity
+        - System timestamp
+        - Optional component health checks
+        
+        This endpoint is used by:
+        - Load balancers for health monitoring
+        - Kubernetes liveness/readiness probes
+        - Monitoring systems (Prometheus, Datadog, etc.)
+        - Developers for debugging connectivity issues
+      operationId: getHealthStatus
+      tags:
+        - health
+      parameters:
+        - name: X-Request-ID
+          in: header
+          description: Optional request ID for tracing (auto-generated if not provided)
+          required: false
+          schema:
+            type: string
+            format: uuid
+            example: "550e8400-e29b-41d4-a716-446655440000"
+      responses:
+        '200':
+          description: System is healthy and operational
+          headers:
+            X-Request-ID:
+              description: Request ID for log correlation
+              schema:
+                type: string
+                format: uuid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+              examples:
+                healthy:
+                  summary: All services healthy
+                  value:
+                    status: "healthy"
+                    timestamp: "2026-01-09T10:30:45.123456Z"
+                    version: "0.1.0"
+                    checks:
+                      database:
+                        status: "healthy"
+                        response_time_ms: 5
+                      redis:
+                        status: "healthy"
+                        response_time_ms: 2
+                degraded:
+                  summary: Degraded service (Redis unavailable)
+                  value:
+                    status: "degraded"
+                    timestamp: "2026-01-09T10:30:45.123456Z"
+                    version: "0.1.0"
+                    checks:
+                      database:
+                        status: "healthy"
+                        response_time_ms: 5
+                      redis:
+                        status: "unhealthy"
+                        error: "Connection refused"
+        '503':
+          description: System is unhealthy (database unavailable or critical service down)
+          headers:
+            X-Request-ID:
+              description: Request ID for log correlation
+              schema:
+                type: string
+                format: uuid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+              examples:
+                database_down:
+                  summary: Database unavailable
+                  value:
+                    status: "unhealthy"
+                    timestamp: "2026-01-09T10:30:45.123456Z"
+                    version: "0.1.0"
+                    checks:
+                      database:
+                        status: "unhealthy"
+                        error: "Could not connect to database"
+                        response_time_ms: 5000
+
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      required:
+        - status
+        - timestamp
+        - version
+      properties:
+        status:
+          type: string
+          enum:
+            - healthy
+            - degraded
+            - unhealthy
+          description: |
+            Overall system health status:
+            - `healthy`: All critical services operational
+            - `degraded`: Some non-critical services unavailable but system functional
+            - `unhealthy`: Critical services down, system not operational
+          example: "healthy"
+        timestamp:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp of health check execution
+          example: "2026-01-09T10:30:45.123456Z"
+        version:
+          type: string
+          description: API version
+          example: "0.1.0"
+        checks:
+          type: object
+          description: Individual component health checks
+          properties:
+            database:
+              $ref: '#/components/schemas/ComponentHealth'
+            redis:
+              $ref: '#/components/schemas/ComponentHealth'
+          additionalProperties:
+            $ref: '#/components/schemas/ComponentHealth'
+
+    ComponentHealth:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          enum:
+            - healthy
+            - unhealthy
+          description: Component health status
+          example: "healthy"
+        response_time_ms:
+          type: integer
+          description: Response time in milliseconds for health check
+          example: 5
+        error:
+          type: string
+          description: Error message if component is unhealthy
+          example: "Connection refused"
+          nullable: true
+        metadata:
+          type: object
+          description: Additional component-specific metadata
+          additionalProperties: true
+          nullable: true
+          example:
+            version: "14.10"
+            pool_size: 5
+            active_connections: 2
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT authentication (not required for health check endpoint)
+
+# Health check endpoint is intentionally public (no security requirement)
+# It should be accessible without authentication for monitoring tools
